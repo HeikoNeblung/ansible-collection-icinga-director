@@ -20,6 +20,19 @@
     max_check_attempts: 3
     accept_config: true
     command_endpoint: fooendpoint
+    enable_notifications: true
+    enable_active_checks: true
+    enable_passive_checks: false
+    enable_event_handler: false
+    enable_flapping: false
+    enable_perfdata: false
+    volatile: false
+    check_period: "24x7"
+    check_timeout: 60
+    flapping_threshold_high: "30.0"
+    flapping_threshold_low: "25.0"
+    icon_image: "http://url1"
+    icon_image_alt: "alt text"
   ignore_errors: true
   register: result
 - assert:

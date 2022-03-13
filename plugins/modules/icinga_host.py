@@ -141,6 +141,65 @@ options:
     type: bool
     choices: [True, False]
     version_added: '1.25.0'
+  enable_notifications:
+    description:
+      - Whether to send notifications for this object.
+    type: bool
+    choices: [True, False]
+  enable_active_checks:
+    description:
+      - Whether to actively check this object.
+    type: bool
+    choices: [True, False]
+  enable_passive_checks:
+    description:
+      - Whether to accept passive check results for this object.
+    type: bool
+    choices: [True, False]
+  enable_event_handler:
+    description:
+      - Whether to enable event handlers this object.
+    type: bool
+    choices: [True, False]
+  enable_flapping:
+    description:
+      - Whether flap detection is enabled on this object.
+    type: bool
+    choices: [True, False]
+  enable_perfdata:
+    description:
+      - Whether to process performance data provided by this object.
+    type: bool
+    choices: [True, False]
+  volatile:
+    description:
+      - Whether this check is volatile.
+    type: bool
+    choices: [True, False]
+  check_period:
+    description:
+      - The name of a time period which determines when this object should be monitored. Not limited by default.
+    type: str
+  check_timeout:
+    description:
+      - Check command timeout in seconds. Overrides the CheckCommand's timeout attribute
+    type: str
+  flapping_threshold_high:
+    description:
+      - Flapping upper bound in percent for a service to be considered flapping
+    type: str
+  flapping_threshold_low:
+    description:
+      - Flapping lower bound in percent for a service to be considered not flapping
+    type: str
+  icon_image:
+    description:
+      - An URL pointing to an icon for this object. Try "tux.png" for icons relative to public/img/icons or "cloud" (no extension) for items from the Icinga icon font
+    type: str
+  icon_image_alt
+    description:
+      - Alternative text to be shown in case above icon is missing
+    type: str
 """
 
 EXAMPLES = """
@@ -166,6 +225,19 @@ EXAMPLES = """
     master_should_connect: true
     accept_config: true
     command_endpoint: fooendpoint
+    enable_notifications: true
+    enable_active_checks: true
+    enable_passive_checks: false
+    enable_event_handler: false
+    enable_flapping: false
+    enable_perfdata: false
+    volatile: false
+    check_period: "24x7"
+    check_timeout: 60
+    flapping_threshold_high: "30.0"
+    flapping_threshold_low: "25.0"
+    icon_image: "http://url1"
+    icon_image_alt: "alt text"
 
 - name: update a host in icinga
   t_systems_mms.icinga_director.icinga_host:
@@ -215,6 +287,19 @@ def main():
         master_should_connect=dict(type="bool", choices=[True, False]),
         accept_config=dict(type="bool", choices=[True, False]),
         command_endpoint=dict(type="str", required=False),
+        enable_notifications=dict(type="bool", choices=[True, False], required=False),
+        enable_active_checks=dict(type="bool", choices=[True, False], required=False),
+        enable_passive_checks=dict(type="bool", choices=[True, False], required=False),
+        enable_event_handler=dict(type="bool", choices=[True, False], required=False),
+        enable_flapping=dict(type="bool", choices=[True, False], required=False),
+        enable_perfdata=dict(type="bool", choices=[True, False], required=False),
+        volatile=dict(type="bool", choices=[True, False], required=False),
+        check_period=dict(type="str", required=False),
+        check_timeout=dict(type="str", required=False),
+        flapping_threshold_high=dict(type="str", required=False),
+        flapping_threshold_low=dict(type="str", required=False),
+        icon_image=dict(type="str", required=False),
+        icon_image_alt=dict(type="str", required=False),
     )
 
     # Define the main module
@@ -252,6 +337,19 @@ def main():
         "master_should_connect",
         "accept_config",
         "command_endpoint",
+        "enable_notifications",
+        "enable_active_checks",
+        "enable_passive_checks",
+        "enable_event_handler",
+        "enable_flapping",
+        "enable_perfdata",
+        "volatile",
+        "check_period",
+        "check_timeout",
+        "flapping_threshold_high",
+        "flapping_threshold_low",
+        "icon_image",
+        "icon_image_alt",
     ]
 
     data = {}
